@@ -3,15 +3,19 @@ import re
 from typing import List, Dict
 from statistics import mode
 
-guard_re = re.compile(r'Guard #(\d+) begins shift')
-# all asleep/awake times are during the midnight hour
-asleep_re = re.compile(r'00:(\d\d)\] falls asleep')
-awake_re = re.compile(r'00:(\d\d)\] wakes up')
 
-def sleep_times(lines: List[str]) -> Dict[int, List[int]]:
+guard_re = re.compile(r"Guard #(\d+) begins shift")
+# all asleep/awake times are during the midnight hour
+asleep_re = re.compile(r"00:(\d\d)\] falls asleep")
+awake_re = re.compile(r"00:(\d\d)\] wakes up")
+
+SleepTimes = Dict[int, List[int]]
+
+
+def sleep_times(lines: List[str]) -> SleepTimes:
     """Map guard ids to a list of the minutes the guard is asleep.
     """
-    guards = {}
+    guards: SleepTimes = {}
     current_guard = None
     asleep_at = None
 
@@ -46,13 +50,13 @@ def sleep_times(lines: List[str]) -> Dict[int, List[int]]:
     return guards
 
 
-if __name__ == '__main__':
-    file_name = 'input.txt'
+if __name__ == "__main__":
+    file_name = "input.txt"
     if len(sys.argv) >= 2:
         file_name = sys.argv[1]
 
-    with open(file_name, 'rU') as f:
-        lines = f.read().strip().split('\n')
+    with open(file_name, "rU") as f:
+        lines = f.read().strip().split("\n")
 
     # timestamps are YYYY-MM-DD hh:mm
     # lexicographic sort will put lines in chronological order
@@ -61,12 +65,11 @@ if __name__ == '__main__':
     guards = sleep_times(lines)
 
     most_asleep_guard, minutes_asleep = max(
-        guards.items(),
-        key=lambda item: len(item[1])
+        guards.items(), key=lambda item: len(item[1])
     )
     most_asleep_minute = mode(minutes_asleep)
-    print('Most asleep guard:', most_asleep_guard)
-    print('His most common minute:', most_asleep_minute)
+    print("Most asleep guard:", most_asleep_guard)
+    print("His most common minute:", most_asleep_minute)
 
     result = most_asleep_guard * most_asleep_minute
     print(result)

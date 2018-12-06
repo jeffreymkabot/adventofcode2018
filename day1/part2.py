@@ -1,6 +1,7 @@
 import sys
 from itertools import cycle
 
+
 def first_revisit(changes, start=0):
     visited = {}
     current = start
@@ -12,13 +13,13 @@ def first_revisit(changes, start=0):
         current += val
 
 
-if __name__ == '__main__':
-    file_name = 'input.txt'
+if __name__ == "__main__":
+    file_name = "input.txt"
     if len(sys.argv) >= 2:
         file_name = sys.argv[1]
 
-    with open(file_name, 'rU') as f:
-        lines = f.read().strip().split('\n')
+    with open(file_name, "rU") as f:
+        lines = f.read().strip().split("\n")
 
     changes = (int(val) for val in lines)
 
