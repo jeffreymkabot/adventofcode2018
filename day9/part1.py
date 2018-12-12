@@ -1,11 +1,13 @@
 import sys
 from collections import deque
+from typing import Dict
+
 
 class Game:
     n_players = 0
 
     turn = 0
-    scores = {}
+    scores: Dict[int, int] = {}
     # originally used a list and kept track of current marble using a separate cursor variable
     # but for part two
     # the time cost of moving memory on list.insert(i) / list.pop(i) became too high
@@ -33,6 +35,7 @@ class Game:
         self.circle.append(marble)
         return self.scores.copy()
 
+
 def main():
     n_players = 9
     turns = 25
@@ -46,7 +49,8 @@ def main():
         score = next(game)
 
     result = max(score.values())
-    print('Winning score', result)
+    print("Winning score", result)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()
